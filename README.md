@@ -84,10 +84,20 @@ To perform the RAG demo with actionable insights:
 
 ##### Prompts you can try
 1. show me a patient and their NHI number
+   
 2. show me a full blood count *table* of NHI <number>
+
+![Table](artefacts/table.png)
+
 3. I need a wbc, rbc, platelets *bar chart* for NHI <number>
+![Barchart](artefacts/barchart.png)
+
+
 4. Provide a blood count *line chart* for <patient name>
-5. I need a full blood count *scatter chart* for NHI <number>
+ ![Linechart](artefacts/linechart.png)
+
+6. I need a full blood count *scatter chart* for NHI <number>
+![scatter](artefacts/scatter.png)
 
 ###: Search
 ###### To do the Keyword, ELSER, and Hybrid Demo
