@@ -226,7 +226,7 @@ with tab3:
 
 if st.sidebar.button("Reset Date Range"):
     st.session_state.date_range = None
-    st.experimental_rerun()
+    st.rerun()
 
 if debug_mode:
     st.sidebar.title("Debug Information")
