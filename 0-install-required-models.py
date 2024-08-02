@@ -1,6 +1,6 @@
 import os
 import argparse
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, NotFoundError
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -16,7 +16,7 @@ es = Elasticsearch(
 models = {
     "elser": {
         "name": os.getenv("ELSER_MODEL"),
-        "type": "sparse_encoding"
+        "type": "text_expansion"
     },
     "ner": {
         "name": os.getenv("NER_MODEL"),
@@ -28,9 +28,16 @@ models = {
     },
     "zero_shot": {
         "name": os.getenv("ZERO_SHOT_MODEL"),
-        "type": "text_classification"
+        "type": "zero_shot_classification"
     }
 }
+
+def is_model_installed(model_name):
+    try:
+        es.ml.get_trained_models(model_id=model_name)
+        return True
+    except NotFoundError:
+        return False
 
 def deploy_model(model_key):
     model = models[model_key]
@@ -57,29 +64,44 @@ def remove_model(model_key):
     except Exception as e:
         print(f"Error removing {model_key.upper()} model: {str(e)}")
 
+def check_and_deploy_models():
+    print("Checking model status and deploying missing models...")
+    for model_key, model in models.items():
+        if not is_model_installed(model["name"]):
+            print(f"{model_key.upper()} model is not installed. Deploying...")
+            deploy_model(model_key)
+        else:
+            print(f"{model_key.upper()} model is already installed.")
+
 def check_models():
     print("Checking model status...")
+    installed = []
     not_installed = []
     for model_key, model in models.items():
-        try:
-            es.ml.get_trained_models(model_id=model["name"])
+        if is_model_installed(model["name"]):
+            installed.append(model_key)
             print(f"{model_key.upper()} model is installed.")
-        except Exception:
-            print(f"{model_key.upper()} model is not installed.")
+        else:
             not_installed.append(model_key)
+            print(f"{model_key.upper()} model is not installed.")
     
+    print("\nSummary:")
+    if installed:
+        print("Installed models:")
+        for model in installed:
+            print(f"- {model.upper()}")
     if not_installed:
-        print("\nModels not installed:")
+        print("Models not installed:")
         for model in not_installed:
             print(f"- {model.upper()}")
     else:
-        print("\nAll models are installed.")
+        print("All models are installed.")
 
 def main():
     parser = argparse.ArgumentParser(description="Manage ML models in Elasticsearch")
-    parser.add_argument("--deploy", action="store_true", help="Deploy the models")
-    parser.add_argument("--remove", action="store_true", help="Remove the models")
-    parser.add_argument("--check", action="store_true", help="Check which models are not installed")
+    parser.add_argument("--deploy", action="store_true", help="Check and deploy missing models")
+    parser.add_argument("--remove", action="store_true", help="Remove all models")
+    parser.add_argument("--check", action="store_true", help="Check which models are installed")
     args = parser.parse_args()
 
     if sum([args.deploy, args.remove, args.check]) != 1:
@@ -87,8 +109,7 @@ def main():
         return
 
     if args.deploy:
-        for model in models:
-            deploy_model(model)
+        check_and_deploy_models()
     elif args.remove:
         for model in models:
             remove_model(model)
