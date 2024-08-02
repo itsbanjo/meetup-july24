@@ -99,7 +99,7 @@ To perform the RAG demo with actionable insights:
 6. I need a full blood count *scatter chart* for NHI <number>
 ![scatter](artefacts/scatter.png)
 
-###: Search
+### Search
 ###### To do the Keyword, ELSER, and Hybrid Demo
 
 ```
