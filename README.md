@@ -1,4 +1,7 @@
 
+### Disclosure: 
+
+This healthcare demo uses fictitious names and data for educational purposes only. Neither Elastic nor the creator of this demo are responsible for any misuse or misinterpretation of the information presented. This demo is not intended for medical advice or decision-making. All content is for demonstration and learning purposes exclusively.
 
 
 ### Requirements: 
