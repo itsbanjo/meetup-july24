@@ -102,6 +102,8 @@ To perform the RAG demo with actionable insights:
 ### Search
 ###### To do the Keyword, ELSER, and Hybrid Demo
 
+*Instructions:* You will need to hit the "Reset Dates" so you could capture the minimum and maximum dates you can search
+
 ```
 1. Create index
    python 3-generate-and-upload-clinical-report.py --create-index
