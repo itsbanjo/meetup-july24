@@ -10,7 +10,7 @@ This healthcare demo uses fictitious names and data for educational purposes onl
 ### Requirements: 
 - python 3.12 and pip
 - A working OpenAI API key
-- A running Elastic Cloud and a working API key
+- A running Elastic Cloud and a working API key (Trial: https://cloud.elastic.co/registration?elektra=cloud-trial&storm=hero)
 - *IMPORTANT*: Update the .env 
 
 
