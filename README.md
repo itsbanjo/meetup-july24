@@ -7,7 +7,29 @@
 - A running Elastic Cloud and a working API key
 - *IMPORTANT*: Update the .env 
 
-#### RAG demo requirements
+
+### Key notes:
+The following python files have --help arguments available. So its very help explanatory. Assuming the ES cloud, ES API, and OpenAI API key are already ready. The next workflow are as follows:
+
+1. Create an index
+2. Build a pipeline
+3. Install a model, (depending with the demo)
+4. Generate simulated blood PDF file
+5. Upload the PDF file to ES. (This is to showcase that you can ingest PDF in Elastic)
+6. Create clinical notes in ES.
+
+
+```
+0-install-required-models.py
+1-generate-blood-report.py
+2-upload-blood-report.py
+3-generate-and-upload-clinical-report.py
+
+```
+
+
+
+#### Demo requirements
 
 1. Clone this github
    ```
@@ -24,6 +46,14 @@
    python 0-install-required-models.py
    ```
 
+
+### Text Analysis:
+Once you performed #3 from the above instructions, you can test this straigh away.  
+
+Sample inputs:
+* NER - "My name is Banjo from Philippines, and I work for Elastic"
+* Sentiment Analysis - "I feel a little awesome today, but my co-worker is having a bad day"
+* Zero Shot - "Please help! I'm running out of battery"
 
 ### RAG: 
 To perform the RAG demo with actionable insights:
